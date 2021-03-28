@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity2">
+
+    <Button
+        android:id="@+id/dialer"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:gravity="center_horizontal"
+        android:onClick="call"
+        android:text="Dialer"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <Button
+        android:id="@+id/website"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:gravity="center_horizontal"
+        android:onClick="website"
+        android:text="Website"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="300dp"
+        tools:layout_editor_absoluteY="200dp" />
+</LinearLayout>

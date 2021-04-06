@@ -37,29 +37,38 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         btn=findViewById(R.id.button);
-       btn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               EditText city=findViewById(R.id.city);
-               EditText country=findViewById(R.id.country);
-               requestQueue= Volley.newRequestQueue(getApplicationContext());
-                apiRequest(v.getContext());
-               v.getContext().startActivity(intent);
-           }
-       });
+        requestQueue= Volley.newRequestQueue(this);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText city=findViewById(R.id.city);
+                String unit=String.valueOf(dropdown.getSelectedItem());
+                String url=getUrl(city.getText().toString(),unit);
+                apiRequest(v.getContext(),url);
+
+            }
+        });
     }
-    public void apiRequest(Context context)
+    public void apiRequest(Context context,String url)
     {
-        String url="http://api.openweathermap.org/data/2.5/weather?q=lahore&APPID=e60925a24114cdb3a4445e4a38058829";
         JsonObjectRequest objectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Log.d("response","response called");
                     JSONObject temp=response.getJSONObject("main");
-                    Log.d("temp",temp.getString("temp"));
+                    JSONObject wind=response.getJSONObject("wind");
+                    JSONObject sys=response.getJSONObject("sys");
+
                     intent=new Intent(context,Tempratue_Detail.class);
                     intent.putExtra("temp",temp.getString("temp"));
+                    intent.putExtra("pressure",temp.getString("pressure"));
+                    intent.putExtra("humidity",temp.getString("humidity"));
+                    intent.putExtra("visibility",response.getString("visibility"));
+                    intent.putExtra("timezone",response.getString("timezone"));
+                    intent.putExtra("speed",wind.getString("speed"));
+                    intent.putExtra("sunrise",sys.getString("sunrise"));
+                    intent.putExtra("sunset",temp.getString("sunset"));
+                    context.startActivity(intent);
 
 
 
@@ -81,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //utility functions
+    public String getUrl(String city,String unit)
+    {
+        if(unit.equals("Celsius"))
+            unit="metric";
+        else if(unit.equals("Kelvin"))
+            unit="standard";
+        else
+            unit="imperial";
 
-
+        String url="http://api.openweathermap.org/data/2.5/weather?q="+city+"&units="+unit+"&APPID=e60925a24114cdb3a4445e4a38058829";
+        return url;
+    }
 }
+
+

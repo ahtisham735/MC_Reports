@@ -13,6 +13,7 @@ public class Tempratue_Detail extends AppCompatActivity {
         setContentView(R.layout.activity_tempratue__detail);
         String temp=getIntent().getStringExtra("temp");
         TextView textView=findViewById(R.id.temp);
+        TextView pressure=findViewById(R.id.pressure);
         textView.setText(temp);
 
     }

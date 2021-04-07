@@ -1,9 +1,12 @@
 package com.example.weatherforcast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +27,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     Button btn;
     Intent intent;
+    String cityName="";
     private RequestQueue requestQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
         btn=findViewById(R.id.button);
         requestQueue= Volley.newRequestQueue(this);
         btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 EditText city=findViewById(R.id.city);
+                cityName=city.getText().toString();
                 String unit=String.valueOf(dropdown.getSelectedItem());
                 String url=getUrl(city.getText().toString(),unit);
                 apiRequest(v.getContext(),url);
@@ -60,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject sys=response.getJSONObject("sys");
 
                     intent=new Intent(context,Tempratue_Detail.class);
+                    intent.putExtra("city",cityName);
                     intent.putExtra("temp",temp.getString("temp"));
                     intent.putExtra("pressure",temp.getString("pressure"));
                     intent.putExtra("humidity",temp.getString("humidity"));
@@ -67,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("timezone",response.getString("timezone"));
                     intent.putExtra("speed",wind.getString("speed"));
                     intent.putExtra("sunrise",sys.getString("sunrise"));
-                    intent.putExtra("sunset",temp.getString("sunset"));
+                    intent.putExtra("sunset",sys.getString("sunset"));
                     context.startActivity(intent);
 
 

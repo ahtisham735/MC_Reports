@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_shadow_start_color"
+
     tools:context=".MainActivity" >
 
     <EditText
@@ -19,19 +20,6 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <EditText
-        android:id="@+id/country"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Enter country name"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city" />
 
     <TextView
         android:id="@+id/textView"
@@ -64,9 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginLeft="52dp"
-        android:layout_marginTop="24dp"
         android:background="@android:drawable/btn_dropdown"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/country" />
+        tools:layout_editor_absoluteY="251dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
